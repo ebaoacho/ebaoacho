@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="320" viewBox="0 0 1000 320" role="img" aria-label="Nao Ebata — Computer Vision × Sports Analytics">
+  <title>Nao Ebata — Computer Vision × Sports Analytics</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0D1117"/>
+      <stop offset="1" stop-color="#0A2A20"/>
+    </linearGradient>
+    <linearGradient id="scan" x1="0" x2="1">
+      <stop offset="0" stop-color="#00E5A0" stop-opacity="0"/>
+      <stop offset="1" stop-color="#00E5A0" stop-opacity="0.22"/>
+    </linearGradient>
+    <linearGradient id="grass" x1="0" x2="1">
+      <stop offset="0" stop-color="#0E3B2C"/>
+      <stop offset="1" stop-color="#0B2F23"/>
+    </linearGradient>
+    <clipPath id="pitch"><rect x="520" y="34" width="446" height="252" rx="6"/></clipPath>
+  </defs>
+  <style>
+    .fade { animation: fade 1.2s ease-out both; }
+    .fade2 { animation: fade 1.2s ease-out 0.35s both; }
+    .fade3 { animation: fade 1.2s ease-out 0.7s both; }
+    @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .line { stroke-dasharray: 1400; stroke-dashoffset: 1400; animation: draw 2.4s ease-out 0.2s forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    .scan { animation: scan 4s linear infinite; }
+    @keyframes scan { from { transform: translateX(0); } to { transform: translateX(506px); } }
+    .cursor { animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .rec { animation: blink 1.4s steps(1) infinite; }
+    @keyframes tag0 {
+      0%, 0.00% { opacity: 0; transform: translateY(8px); }
+      3.00%, 21.00% { opacity: 1; transform: translateY(0); }
+      25.00%, 100% { opacity: 0; transform: translateY(-8px); }
+    }
+    .tag0 { animation: tag0 12.8s ease-in-out infinite; opacity: 0; }
+    @keyframes tag1 {
+      0%, 24.99% { opacity: 0; transform: translateY(8px); }
+      28.00%, 46.00% { opacity: 1; transform: translateY(0); }
+      50.00%, 100% { opacity: 0; transform: translateY(-8px); }
+    }
+    .tag1 { animation: tag1 12.8s ease-in-out infinite; opacity: 0; }
+    @keyframes tag2 {
+      0%, 49.99% { opacity: 0; transform: translateY(8px); }
+      53.00%, 71.00% { opacity: 1; transform: translateY(0); }
+      75.00%, 100% { opacity: 0; transform: translateY(-8px); }
+    }
+    .tag2 { animation: tag2 12.8s ease-in-out infinite; opacity: 0; }
+    @keyframes tag3 {
+      0%, 74.99% { opacity: 0; transform: translateY(8px); }
+      78.00%, 96.00% { opacity: 1; transform: translateY(0); }
+      100.00%, 100% { opacity: 0; transform: translateY(-8px); }
+    }
+    .tag3 { animation: tag3 12.8s ease-in-out infinite; opacity: 0; }
+  </style>
+
+  <rect width="1000" height="320" rx="14" fill="url(#bg)"/>
+  <rect x="0.5" y="0.5" width="999" height="319" rx="14" fill="none" stroke="#21262D"/>
+
+  <!-- Left: identity -->
+  <g class="fade">
+    <text x="48" y="74" fill="#8B949E" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="14" letter-spacing="2">HELLO, WORLD — I'M</text>
+  </g>
+  <g class="fade2">
+    <text x="46" y="136" fill="#E6EDF3" font-family="-apple-system,'Segoe UI','Hiragino Sans','Noto Sans JP',Helvetica,Arial,sans-serif" font-size="58" font-weight="800" letter-spacing="-1">Nao Ebata</text>
+    <text x="48" y="170" fill="#8B949E" font-family="-apple-system,'Segoe UI','Hiragino Sans','Noto Sans JP',Helvetica,Arial,sans-serif" font-size="17">江畑 尚 · CV Researcher &amp; Full-stack Engineer</text>
+  </g>
+  <g>
+    <text class="tag0" x="48" y="214" fill="#00E5A0" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="17">&gt; Computer Vision × Sports Analytics</text>
+    <text class="tag1" x="48" y="214" fill="#00E5A0" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="17">&gt; Finding a 22cm ball on a 105m pitch.</text>
+    <text class="tag2" x="48" y="214" fill="#00E5A0" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="17">&gt; Who has the ball? I teach models to answer.</text>
+    <text class="tag3" x="48" y="214" fill="#00E5A0" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="17">&gt; Research by day. Shipping products by night.</text>
+  </g>
+  <g class="fade3">
+    <rect x="48" y="246" width="190" height="30" rx="15" fill="none" stroke="#00E5A0" stroke-opacity="0.6"/>
+    <circle cx="66" cy="261" r="4" fill="#00E5A0" class="rec"/>
+    <text x="78" y="266" fill="#E6EDF3" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="13">Kansai Univ. · M2</text>
+    <rect x="250" y="246" width="150" height="30" rx="15" fill="none" stroke="#30363D"/>
+    <text x="268" y="266" fill="#8B949E" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="13">Osaka, Japan</text>
+  </g>
+
+  <!-- Right: live tracking demo -->
+  <g clip-path="url(#pitch)">
+    <rect x="520" y="34" width="446" height="252" fill="url(#grass)"/>
+    <rect x="520.0" y="34" width="27.9" height="252" fill="#ffffff" opacity="0.025"/><rect x="575.8" y="34" width="27.9" height="252" fill="#ffffff" opacity="0.025"/><rect x="631.5" y="34" width="27.9" height="252" fill="#ffffff" opacity="0.025"/><rect x="687.2" y="34" width="27.9" height="252" fill="#ffffff" opacity="0.025"/><rect x="743.0" y="34" width="27.9" height="252" fill="#ffffff" opacity="0.025"/><rect x="798.8" y="34" width="27.9" height="252" fill="#ffffff" opacity="0.025"/><rect x="854.5" y="34" width="27.9" height="252" fill="#ffffff" opacity="0.025"/><rect x="910.2" y="34" width="27.9" height="252" fill="#ffffff" opacity="0.025"/>
+    <g fill="none" stroke="#3FB98A" stroke-opacity="0.45" stroke-width="1.5">
+      <rect class="line" x="528" y="42" width="430" height="236"/>
+      <line class="line" x1="743.0" y1="42" x2="743.0" y2="278"/>
+      <circle class="line" cx="743.0" cy="160.0" r="34"/>
+      <rect class="line" x="528" y="100.0" width="62" height="120"/>
+      <rect class="line" x="896" y="100.0" width="62" height="120"/>
+    </g>
+    <rect class="scan" x="460" y="34" width="60" height="252" fill="url(#scan)"/>
+    
+    <circle cx="650" cy="150" r="6.5" fill="#58A6FF" opacity="0.9">
+      <animateTransform attributeName="transform" type="translate" values="0 0;8 -6;0 0" dur="3.0s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="745" cy="160" r="6.5" fill="#58A6FF" opacity="0.9">
+      <animateTransform attributeName="transform" type="translate" values="0 0;-10 8;0 0" dur="3.6s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="850" cy="140" r="6.5" fill="#58A6FF" opacity="0.9">
+      <animateTransform attributeName="transform" type="translate" values="0 0;6 10;0 0" dur="4.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="870" cy="230" r="6.5" fill="#58A6FF" opacity="0.9">
+      <animateTransform attributeName="transform" type="translate" values="0 0;-8 -6;0 0" dur="4.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="720" cy="240" r="6.5" fill="#58A6FF" opacity="0.9">
+      <animateTransform attributeName="transform" type="translate" values="0 0;10 -4;0 0" dur="5.4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="940" cy="170" r="6.5" fill="#58A6FF" opacity="0.9">
+      <animateTransform attributeName="transform" type="translate" values="0 0;-6 6;0 0" dur="6.0s" repeatCount="indefinite"/>
+    </circle>
+    
+    <g>
+      <circle cx="587" cy="204" r="16" fill="none" stroke="#00E5A0" stroke-width="1.5" opacity="0">
+        <animate attributeName="opacity" values="1;1;0;0;0;0;0;0;1" keyTimes="0;0.12;0.25;0.37;0.5;0.62;0.75;0.87;1" dur="10s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="14;19;14" dur="1.2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="587" cy="204" r="7" fill="#00E5A0"/>
+      <text x="587" y="191" fill="#00E5A0" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="10" text-anchor="middle" opacity="0.85">#7</text>
+    </g>
+    <g>
+      <circle cx="677" cy="106" r="16" fill="none" stroke="#00E5A0" stroke-width="1.5" opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0;0;0;0" keyTimes="0;0.12;0.25;0.37;0.5;0.62;0.75;0.87;1" dur="10s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="14;19;14" dur="1.2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="677" cy="106" r="7" fill="#00E5A0"/>
+      <text x="677" y="93" fill="#00E5A0" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="10" text-anchor="middle" opacity="0.85">#10</text>
+    </g>
+    <g>
+      <circle cx="787" cy="190" r="16" fill="none" stroke="#00E5A0" stroke-width="1.5" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0;1;1;0;0;0" keyTimes="0;0.12;0.25;0.37;0.5;0.62;0.75;0.87;1" dur="10s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="14;19;14" dur="1.2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="787" cy="190" r="7" fill="#00E5A0"/>
+      <text x="787" y="177" fill="#00E5A0" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="10" text-anchor="middle" opacity="0.85">#8</text>
+    </g>
+    <g>
+      <circle cx="887" cy="92" r="16" fill="none" stroke="#00E5A0" stroke-width="1.5" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0;0;0;1;1;0" keyTimes="0;0.12;0.25;0.37;0.5;0.62;0.75;0.87;1" dur="10s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="14;19;14" dur="1.2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="887" cy="92" r="7" fill="#00E5A0"/>
+      <text x="887" y="79" fill="#00E5A0" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="10" text-anchor="middle" opacity="0.85">#9</text>
+    </g>
+
+    <!-- Ball + detection box -->
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="600 210;600 210;690 112;690 112;800 196;800 196;900 98;900 98;600 210" keyTimes="0;0.12;0.25;0.37;0.5;0.62;0.75;0.87;1" dur="10s" calcMode="spline"
+        keySplines="0 0 1 1;.45 0 .25 1;0 0 1 1;.45 0 .25 1;0 0 1 1;.45 0 .25 1;0 0 1 1;.4 0 .2 1" repeatCount="indefinite"/>
+      <circle r="4.5" fill="#ffffff"/>
+      <rect x="-10" y="-10" width="20" height="20" fill="none" stroke="#FFD166" stroke-width="1.6"/>
+      <rect x="10" y="10" width="64" height="14" fill="#FFD166"/>
+      <text x="14" y="20.5" fill="#0D1117" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="10" font-weight="700">ball 0.97</text>
+    </g>
+
+    <!-- HUD -->
+    <rect x="520" y="34" width="446" height="26" fill="#000" opacity="0.35"/>
+    <circle cx="536" cy="47" r="4" fill="#FF4D4F" class="rec"/>
+    <text x="548" y="51" fill="#E6EDF3" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11">LIVE · ball-detector + possession-estimator</text>
+    
+      <text x="534" y="272" fill="#00E5A0" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" opacity="0">ON-BALL: GREEN #7
+        <animate attributeName="opacity" values="1;1;0;0;0;0;0;0;1" keyTimes="0;0.12;0.25;0.37;0.5;0.62;0.75;0.87;1" dur="10s" repeatCount="indefinite"/>
+      </text>
+      <text x="534" y="272" fill="#00E5A0" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" opacity="0">ON-BALL: GREEN #10
+        <animate attributeName="opacity" values="0;0;1;1;0;0;0;0;0" keyTimes="0;0.12;0.25;0.37;0.5;0.62;0.75;0.87;1" dur="10s" repeatCount="indefinite"/>
+      </text>
+      <text x="534" y="272" fill="#00E5A0" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" opacity="0">ON-BALL: GREEN #8
+        <animate attributeName="opacity" values="0;0;0;0;1;1;0;0;0" keyTimes="0;0.12;0.25;0.37;0.5;0.62;0.75;0.87;1" dur="10s" repeatCount="indefinite"/>
+      </text>
+      <text x="534" y="272" fill="#00E5A0" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="12" opacity="0">ON-BALL: GREEN #9
+        <animate attributeName="opacity" values="0;0;0;0;0;0;1;1;0" keyTimes="0;0.12;0.25;0.37;0.5;0.62;0.75;0.87;1" dur="10s" repeatCount="indefinite"/>
+      </text>
+  </g>
+  <rect x="520" y="34" width="446" height="252" rx="6" fill="none" stroke="#30363D"/>
+</svg>

@@ -1,0 +1,52 @@
+name: Update profile assets
+
+on:
+  schedule:
+    - cron: "17 15 * * *"   # 毎日 00:17 JST
+  workflow_dispatch:         # Actions タブから手動実行もできる
+  push:
+    branches: [main]
+    paths:
+      - "scripts/**"
+      - ".github/workflows/profile.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-assets
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # 自作の統計カード（貢献ヒートマップ・言語・ストリーク）
+      - name: Generate stats card
+        env:
+          # METRICS_TOKEN（PAT）を登録すると private の貢献も数に含まれる
+          GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN || secrets.GITHUB_TOKEN }}
+          GH_USER: ${{ github.repository_owner }}
+        run: python scripts/generate_stats.py
+
+      # 草をボールが走り回る（ヘビの代わりにサッカーボールっぽい緑系パレット）
+      - name: Generate contribution animation
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            assets/generated/pitch-snake.svg?palette=github-dark&color_snake=#E6EDF3&color_dots=#161B22,#0B3D2E,#0E6B4C,#10A372,#00E5A0
+
+      - name: Commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/generated
+          git diff --cached --quiet || git commit -m "chore: update profile stats [skip ci]"
+          git push

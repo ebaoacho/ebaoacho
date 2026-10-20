@@ -265,7 +265,7 @@ def whoami() -> str:
 # --------------------------------------------------------------------------- #
 def stack() -> str:
     groups = [
-        ("VISION / ML", [("Python", "#3572A5"), ("PyTorch", "#EE4C2C"), ("OpenCV", "#5C3EE8"), ("YOLO", "#00FFFF"),
+        ("VISION / ML", [("Python", "#3572A5"), ("PyTorch", "#EE4C2C"), ("TensorFlow", "#FF6F00"), ("OpenCV", "#5C3EE8"), ("YOLO", "#00FFFF"),
                          ("KPConv", "#7EE787"), ("LangChain", "#1C9C7C"), ("Gemini API", "#8E75B2")]),
         ("WEB / APP", [("TypeScript", "#3178C6"), ("Next.js", "#E6EDF3"), ("React", "#61DAFB"), ("Tailwind", "#38BDF8"),
                        ("Flutter", "#02569B"), ("Swift", "#F05138"), ("Django", "#44B78B"), ("PHP", "#777BB4"), ("WordPress", "#21759B")]),

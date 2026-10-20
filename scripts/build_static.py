@@ -201,7 +201,7 @@ def whoami() -> str:
         ("key", "name:", "江畑 尚 (Nao Ebata)"),
         ("key", "role:", "Graduate researcher · Full-stack engineer"),
         ("key", "lab:", "Kansai University, Graduate School of Informatics (M2)"),
-        ("key", "research:", "[object_detection, video_understanding, human_in_the_loop_ai]"),
+        ("key", "research:", "[sports_video_analysis, point_cloud_classification, infra_inspection_ai]"),
         ("key", "ships:", "[web_apps, ios_flutter_apps, reservation_payment, llm_tools]"),
         ("key", "awards:", "[JPHacks 三菱重工賞 & SecureCycle賞, RSS Hackathon 審査員特別賞]"),
         ("key", "philosophy:", "\"AI does what it's good at. Humans do the rest.\""),

@@ -1,44 +1,10 @@
 <p align="center">
-  <img src="assets/header.svg" alt="Nao Ebata — Computer Vision × Sports Analytics" width="100%" />
+  <img src="assets/header.svg" alt="Nao Ebata — Computer Vision × Full-stack Engineering" width="100%" />
 </p>
 
 <p align="center">
   <img src="assets/whoami.svg" alt="whoami" width="100%" />
 </p>
-
-## ⚽ Research — *Reading the game with pixels*
-
-<table>
-<tr>
-<td width="33%" valign="top">
-
-### 🎯 Ball Detection
-試合映像の中の、小さく・速く・隠れやすいボールを検出する。照明・天候・カメラ位置などの**試合環境の違いに強い**検出を目指しています。
-
-<sub>`YOLO` · `Human-in-the-loop` · `PyTorch`</sub>
-
-</td>
-<td width="33%" valign="top">
-
-### 🧍 On-the-Ball Player
-「今、誰がボールを持っているか」をフレーム単位で推定。ボール検出と選手検出を組み合わせた**オンザボールプレイヤ推定**。
-
-<sub>`Detection` · `Tracking` · `Possession`</sub>
-
-</td>
-<td width="33%" valign="top">
-
-### 📈 Match Viewer
-試合中の**戦術の切り替わり**を自動検出。18次元のチーム特徴量に PELT + BIC を適用し、Jリーグの試合で検証。
-
-<sub>`Time Series` · `Change-point` · `Viz`</sub>
-
-</td>
-</tr>
-</table>
-
-> 📝 人工知能学会 論文誌 / スポーツ情報学研究会 / SIT2026 Soccer Data Ideathon
-> 🛰️ Previously: LiDAR point-cloud processing for sewer pipe inspection (KPConv)
 
 ## 🚀 Featured Builds
 
@@ -49,13 +15,46 @@
 | 📱 | **[Settee](https://github.com/ebaoacho/Settee)** | 位置情報ベースのマッチングアプリ。1対1／グループ、空き日程カレンダー、チャット、サブスク課金まで | Flutter · Django REST · PostgreSQL · Docker |
 | 🍽️ | **[KichiKichi Reservation](https://github.com/ebaoacho/KichiKichi-Paid-Reservation)** | 実店舗向けの予約・決済システム。仮押さえ＋**行ロックで二重予約を防止**、冪等なStripe決済 | PHP · WordPress · Stripe · MySQL |
 
-## 🧰 Arsenal
+## 🔬 Research
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+### 🎯 Small Object Detection
+小さく・速く・隠れやすい対象を、撮影環境の違いに左右されず検出する。人の修正を学習に還元する **Human-in-the-loop** なワークフローも設計。
+
+<sub>`YOLO` · `PyTorch` · `HITL`</sub>
+
+</td>
+<td width="33%" valign="top">
+
+### 🎥 Video Understanding
+物体検出と人物検出を統合し、映像の中で「誰が・何に関わっているか」をフレーム単位で推定。スポーツ映像を題材に研究中。
+
+<sub>`Detection` · `Tracking` · `Interaction`</sub>
+
+</td>
+<td width="33%" valign="top">
+
+### 📈 Time-series Analysis
+多次元の時系列データから状態の切り替わりを自動検出する可視化システム（PELT + BIC）。
+
+<sub>`Change-point` · `Visualization`</sub>
+
+</td>
+</tr>
+</table>
+
+<sub>📝 人工知能学会 論文誌 / スポーツ情報学研究会 ほか　·　🛰️ LiDAR点群処理（KPConv）による下水管点検の研究経験あり</sub>
+
+## 🧰 Tech Stack
 
 <p align="center">
   <img src="assets/stack.svg" alt="Tech stack" width="100%" />
 </p>
 
-## 📊 Match Stats
+## 📊 Activity
 
 <p align="center">
   <img src="assets/generated/stats.svg" alt="GitHub stats" width="100%" />

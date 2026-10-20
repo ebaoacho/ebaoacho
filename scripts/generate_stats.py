@@ -115,7 +115,7 @@ def render(u):
   </style>
   <rect width="{W}" height="{H}" rx="12" fill="{BG}"/>
   <rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="12" fill="none" stroke="#21262D"/>
-  <text x="32" y="40" fill="{MUTED}" font-family="{MONO}" font-size="12" letter-spacing="2">MATCH STATS · LAST 12 MONTHS</text>
+  <text x="32" y="40" fill="{MUTED}" font-family="{MONO}" font-size="12" letter-spacing="2">ACTIVITY · LAST 12 MONTHS</text>
   <circle cx="{W - 120}" cy="36" r="4" fill="{GREEN}" class="pulse"/>
   <text x="{W - 108}" y="40" fill="{MUTED}" font-family="{MONO}" font-size="11">auto-synced</text>""")
 
@@ -136,7 +136,7 @@ def render(u):
     <text x="{x + 14:.1f}" y="120" fill="{MUTED}" font-family="{SANS}" font-size="12">{label}</text>
   </g>""")
 
-    # Contribution heatmap ("pitch grid")
+    # Contribution heatmap
     weeks = cal["weeks"][-53:]
     cs, gap = 11, 3
     gx, gy = 32, 160

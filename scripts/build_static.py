@@ -20,63 +20,91 @@ MONO = "ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',m
 
 
 # --------------------------------------------------------------------------- #
-# 1. Header: animated tracking demo on a pitch + name and rotating taglines
+# 1. Header: name + rotating taglines + animated "see -> understand -> ship" pipeline
 # --------------------------------------------------------------------------- #
 def header() -> str:
     W, H = 1000, 320
-    # Pitch area
     px, py, pw, ph = 520, 34, 446, 252
 
-    # Ball route between attackers (ball positions), with holds at each player.
-    pts = [(600, 210), (690, 112), (800, 196), (900, 98)]
-    seq = [pts[0], pts[0], pts[1], pts[1], pts[2], pts[2], pts[3], pts[3], pts[0]]
-    kt = "0;0.12;0.25;0.37;0.5;0.62;0.75;0.87;1"
-    trans = ";".join(f"{x} {y}" for x, y in seq)
-    dur = "10s"
+    frames = [110, 160, 210]                 # input frame centres (y)
+    l1 = [95, 135, 175, 215]                 # model layer 1 (y)
+    l2 = [95, 135, 175, 215]                 # model layer 2 (y)
+    apps = [(110, "Web"), (160, "iOS"), (210, "API")]
+    fx, fw, fh = 548, 58, 34
+    x1, x2 = 682, 772
+    ax, aw = 842, 104
 
-    owner = [
-        "1;1;0;0;0;0;0;0;1",
-        "0;0;1;1;0;0;0;0;0",
-        "0;0;0;0;1;1;0;0;0",
-        "0;0;0;0;0;0;1;1;0",
-    ]
-    numbers = ["#7", "#10", "#8", "#9"]
+    edges = ""
+    for fy in frames:
+        for y in l1:
+            edges += f'<line x1="{fx + fw}" y1="{fy}" x2="{x1}" y2="{y}"/>'
+    for ya in l1:
+        for yb in l2:
+            edges += f'<line x1="{x1}" y1="{ya}" x2="{x2}" y2="{yb}"/>'
+    for y in l2:
+        for ay, _ in apps:
+            edges += f'<line x1="{x2}" y1="{y}" x2="{ax}" y2="{ay}"/>'
 
-    attackers = ""
-    for i, ((x, y), op, num) in enumerate(zip(pts, owner, numbers)):
-        cx, cy = x - 13, y - 6
-        attackers += f"""
-    <g>
-      <circle cx="{cx}" cy="{cy}" r="16" fill="none" stroke="{GREEN}" stroke-width="1.5" opacity="0">
-        <animate attributeName="opacity" values="{op}" keyTimes="{kt}" dur="{dur}" repeatCount="indefinite"/>
-        <animate attributeName="r" values="14;19;14" dur="1.2s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="{cx}" cy="{cy}" r="7" fill="{GREEN}"/>
-      <text x="{cx}" y="{cy - 13}" fill="{GREEN}" font-family="{MONO}" font-size="10" text-anchor="middle" opacity="0.85">{num}</text>
-    </g>"""
+    # Input frames with jittering detection boxes
+    fr = ""
+    boxes = [(8, 6, 18, 14, "6 4;-4 2;0 0"), (30, 10, 20, 16, "-5 3;4 -2;0 0"), (14, 12, 24, 14, "4 -3;-6 1;0 0")]
+    for i, (fy, (bx, by, bw, bh, jit)) in enumerate(zip(frames, boxes)):
+        y0 = fy - fh / 2
+        fr += f"""
+    <rect x="{fx}" y="{y0}" width="{fw}" height="{fh}" rx="4" fill="#161B22" stroke="#30363D"/>
+    <path d="M{fx + 4} {y0 + fh - 6} l12 -10 l9 6 l14 -12 l15 14" fill="none" stroke="#30363D" stroke-width="1.5"/>
+    <rect x="{fx + bx}" y="{y0 + by}" width="{bw}" height="{bh}" fill="none" stroke="{YELLOW}" stroke-width="1.3">
+      <animateTransform attributeName="transform" type="translate" values="0 0;{jit}" dur="{2.4 + i * 0.5:.1f}s" repeatCount="indefinite"/>
+    </rect>"""
 
-    # Defenders drifting around
-    defenders = ""
-    dpos = [(650, 150, "8 -6"), (745, 160, "-10 8"), (850, 140, "6 10"), (870, 230, "-8 -6"), (720, 240, "10 -4"), (940, 170, "-6 6")]
-    for i, (x, y, d) in enumerate(dpos):
-        defenders += f"""
-    <circle cx="{x}" cy="{y}" r="6.5" fill="{BLUE}" opacity="0.9">
-      <animateTransform attributeName="transform" type="translate" values="0 0;{d};0 0" dur="{3 + i * 0.6:.1f}s" repeatCount="indefinite"/>
+    nodes = ""
+    for col, (x, ys) in enumerate([(x1, l1), (x2, l2)]):
+        for j, y in enumerate(ys):
+            nodes += f"""
+    <circle cx="{x}" cy="{y}" r="7" fill="#161B22" stroke="{GREEN if col == 0 else BLUE}" stroke-width="1.5"/>
+    <circle cx="{x}" cy="{y}" r="3" fill="{GREEN if col == 0 else BLUE}">
+      <animate attributeName="opacity" values="0.25;1;0.25" dur="1.8s" begin="{(col * 4 + j) * 0.22:.2f}s" repeatCount="indefinite"/>
     </circle>"""
 
-    # HUD readout: who has the ball
+    cards = ""
+    for i, (ay, label) in enumerate(apps):
+        y0 = ay - 17
+        cards += f"""
+    <rect x="{ax}" y="{y0}" width="{aw}" height="34" rx="7" fill="#161B22" stroke="#30363D"/>
+    <circle cx="{ax + 14}" cy="{ay}" r="4" fill="{GREEN}">
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" begin="{i * 0.4:.1f}s" repeatCount="indefinite"/>
+    </circle>
+    <text x="{ax + 26}" y="{ay + 4.5}" fill="{TEXT}" font-family="{MONO}" font-size="12">{label}</text>
+    <rect x="{ax + 62}" y="{ay - 3}" width="30" height="6" rx="3" fill="#30363D"/>"""
+
+    # Data pulses travelling the whole pipeline
+    routes = [(0, 0, 1, 0), (1, 2, 3, 1), (2, 3, 0, 2), (0, 1, 2, 1), (2, 0, 3, 0), (1, 3, 1, 2)]
+    pulses = ""
+    for k, (a, b, c, d) in enumerate(routes):
+        path = f"M{fx + fw},{frames[a]} L{x1},{l1[b]} L{x2},{l2[c]} L{ax},{apps[d][0]}"
+        col = GREEN if k % 2 == 0 else BLUE
+        pulses += f"""
+    <circle r="3" fill="{col}" opacity="0">
+      <animateMotion path="{path}" dur="2.6s" begin="{k * 0.55:.2f}s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="2.6s" begin="{k * 0.55:.2f}s" repeatCount="indefinite"/>
+    </circle>"""
+
+    states = ["detecting objects…", "training model…", "evaluating metrics…", "deploying to prod…", "shipped ✓"]
+    m = len(states)
     hud = ""
-    for op, num in zip(owner, numbers):
+    for i, st in enumerate(states):
+        vals = ";".join("1" if j == i else "0" for j in range(m)) + (";1" if i == 0 else ";0")
+        kts = ";".join(f"{j / m:.3f}" for j in range(m)) + ";1"
         hud += f"""
-      <text x="{px + 14}" y="{py + ph - 14}" fill="{GREEN}" font-family="{MONO}" font-size="12" opacity="0">ON-BALL: GREEN {num}
-        <animate attributeName="opacity" values="{op}" keyTimes="{kt}" dur="{dur}" repeatCount="indefinite"/>
-      </text>"""
+    <text x="{px + 14}" y="{py + ph - 14}" fill="{GREEN}" font-family="{MONO}" font-size="12" opacity="0">status: {st}
+      <animate attributeName="opacity" values="{vals}" keyTimes="{kts}" calcMode="discrete" dur="{m * 1.8:.1f}s" repeatCount="indefinite"/>
+    </text>"""
 
     taglines = [
-        "Computer Vision × Sports Analytics",
-        "Finding a 22cm ball on a 105m pitch.",
-        "Who has the ball? I teach models to answer.",
-        "Research by day. Shipping products by night.",
+        "Computer Vision × Full-stack Engineering",
+        "Turning research into products people use.",
+        "From model training to App Store release.",
+        "Designing the boundary between AI and humans.",
     ]
     n = len(taglines)
     cycle = 3.2 * n
@@ -92,37 +120,29 @@ def header() -> str:
       {end:.2f}%, 100% {{ opacity: 0; transform: translateY(-8px); }}
     }}
     .tag{i} {{ animation: tag{i} {cycle:.1f}s ease-in-out infinite; opacity: 0; }}"""
-        tag_svg += f'\n    <text class="tag{i}" x="48" y="214" fill="{GREEN}" font-family="{MONO}" font-size="17">&gt; {t}</text>'
+        tag_svg += f'\n    <text class="tag{i}" x="48" y="214" fill="{GREEN}" font-family="{MONO}" font-size="16.5">&gt; {t}</text>'
 
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img" aria-label="Nao Ebata — Computer Vision × Sports Analytics">
-  <title>Nao Ebata — Computer Vision × Sports Analytics</title>
+    dots = "".join(f'<circle cx="{px + 10 + i * 20}" cy="{py + 36 + j * 20}" r="0.9" fill="#ffffff" opacity="0.07"/>'
+                   for i in range(22) for j in range(11))
+
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img" aria-label="Nao Ebata — Computer Vision × Full-stack Engineering">
+  <title>Nao Ebata — Computer Vision × Full-stack Engineering</title>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="{BG}"/>
       <stop offset="1" stop-color="#0A2A20"/>
     </linearGradient>
-    <linearGradient id="scan" x1="0" x2="1">
-      <stop offset="0" stop-color="{GREEN}" stop-opacity="0"/>
-      <stop offset="1" stop-color="{GREEN}" stop-opacity="0.22"/>
-    </linearGradient>
-    <linearGradient id="grass" x1="0" x2="1">
-      <stop offset="0" stop-color="#0E3B2C"/>
-      <stop offset="1" stop-color="#0B2F23"/>
-    </linearGradient>
-    <clipPath id="pitch"><rect x="{px}" y="{py}" width="{pw}" height="{ph}" rx="6"/></clipPath>
+    <clipPath id="panel"><rect x="{px}" y="{py}" width="{pw}" height="{ph}" rx="6"/></clipPath>
   </defs>
   <style>
     .fade {{ animation: fade 1.2s ease-out both; }}
     .fade2 {{ animation: fade 1.2s ease-out 0.35s both; }}
     .fade3 {{ animation: fade 1.2s ease-out 0.7s both; }}
     @keyframes fade {{ from {{ opacity: 0; transform: translateY(10px); }} to {{ opacity: 1; transform: translateY(0); }} }}
-    .line {{ stroke-dasharray: 1400; stroke-dashoffset: 1400; animation: draw 2.4s ease-out 0.2s forwards; }}
+    .edges {{ stroke-dasharray: 300; stroke-dashoffset: 300; animation: draw 2.2s ease-out 0.2s forwards; }}
     @keyframes draw {{ to {{ stroke-dashoffset: 0; }} }}
-    .scan {{ animation: scan 4s linear infinite; }}
-    @keyframes scan {{ from {{ transform: translateX(0); }} to {{ transform: translateX({pw + 60}px); }} }}
-    .cursor {{ animation: blink 1s steps(1) infinite; }}
-    @keyframes blink {{ 50% {{ opacity: 0; }} }}
-    .rec {{ animation: blink 1.4s steps(1) infinite; }}{tag_css}
+    .rec {{ animation: blink 1.4s steps(1) infinite; }}
+    @keyframes blink {{ 50% {{ opacity: 0; }} }}{tag_css}
   </style>
 
   <rect width="{W}" height="{H}" rx="14" fill="url(#bg)"/>
@@ -146,35 +166,23 @@ def header() -> str:
     <text x="268" y="266" fill="{MUTED}" font-family="{MONO}" font-size="13">Osaka, Japan</text>
   </g>
 
-  <!-- Right: live tracking demo -->
-  <g clip-path="url(#pitch)">
-    <rect x="{px}" y="{py}" width="{pw}" height="{ph}" fill="url(#grass)"/>
-    {''.join(f'<rect x="{px + i * pw / 8:.1f}" y="{py}" width="{pw / 16:.1f}" height="{ph}" fill="#ffffff" opacity="0.025"/>' for i in range(8))}
-    <g fill="none" stroke="#3FB98A" stroke-opacity="0.45" stroke-width="1.5">
-      <rect class="line" x="{px + 8}" y="{py + 8}" width="{pw - 16}" height="{ph - 16}"/>
-      <line class="line" x1="{px + pw / 2}" y1="{py + 8}" x2="{px + pw / 2}" y2="{py + ph - 8}"/>
-      <circle class="line" cx="{px + pw / 2}" cy="{py + ph / 2}" r="34"/>
-      <rect class="line" x="{px + 8}" y="{py + ph / 2 - 60}" width="62" height="120"/>
-      <rect class="line" x="{px + pw - 70}" y="{py + ph / 2 - 60}" width="62" height="120"/>
-    </g>
-    <rect class="scan" x="{px - 60}" y="{py}" width="60" height="{ph}" fill="url(#scan)"/>
-    {defenders}
-    {attackers}
-
-    <!-- Ball + detection box -->
-    <g>
-      <animateTransform attributeName="transform" type="translate" values="{trans}" keyTimes="{kt}" dur="{dur}" calcMode="spline"
-        keySplines="0 0 1 1;.45 0 .25 1;0 0 1 1;.45 0 .25 1;0 0 1 1;.45 0 .25 1;0 0 1 1;.4 0 .2 1" repeatCount="indefinite"/>
-      <circle r="4.5" fill="#ffffff"/>
-      <rect x="-10" y="-10" width="20" height="20" fill="none" stroke="{YELLOW}" stroke-width="1.6"/>
-      <rect x="10" y="10" width="64" height="14" fill="{YELLOW}"/>
-      <text x="14" y="20.5" fill="{BG}" font-family="{MONO}" font-size="10" font-weight="700">ball 0.97</text>
-    </g>
-
-    <!-- HUD -->
+  <!-- Right: research -> product pipeline -->
+  <g clip-path="url(#panel)">
+    <rect x="{px}" y="{py}" width="{pw}" height="{ph}" fill="#0F1620"/>
+    {dots}
     <rect x="{px}" y="{py}" width="{pw}" height="26" fill="#000" opacity="0.35"/>
-    <circle cx="{px + 16}" cy="{py + 13}" r="4" fill="#FF4D4F" class="rec"/>
-    <text x="{px + 28}" y="{py + 17}" fill="{TEXT}" font-family="{MONO}" font-size="11">LIVE · ball-detector + possession-estimator</text>
+    <circle cx="{px + 16}" cy="{py + 13}" r="4" fill="{GREEN}" class="rec"/>
+    <text x="{px + 28}" y="{py + 17}" fill="{TEXT}" font-family="{MONO}" font-size="11">pipeline · see → understand → ship</text>
+    <g fill="{MUTED}" font-family="{MONO}" font-size="10" letter-spacing="1.5" text-anchor="middle">
+      <text x="{fx + fw / 2}" y="{py + 46}">INPUT</text>
+      <text x="{(x1 + x2) / 2}" y="{py + 46}">MODEL</text>
+      <text x="{ax + aw / 2}" y="{py + 46}">PRODUCT</text>
+    </g>
+    <g class="edges" stroke="#3B4452" stroke-width="0.8" opacity="0.6">{edges}</g>
+    {fr}
+    {nodes}
+    {cards}
+    {pulses}
     {hud}
   </g>
   <rect x="{px}" y="{py}" width="{pw}" height="{ph}" rx="6" fill="none" stroke="#30363D"/>
@@ -193,12 +201,12 @@ def whoami() -> str:
         ("key", "name:", "江畑 尚 (Nao Ebata)"),
         ("key", "role:", "Graduate researcher · Full-stack engineer"),
         ("key", "lab:", "Kansai University, Graduate School of Informatics (M2)"),
-        ("key", "research:", "[ball_detection, possession_estimation, tactical_change_points]"),
+        ("key", "research:", "[object_detection, video_understanding, human_in_the_loop_ai]"),
         ("key", "ships:", "[web_apps, ios_flutter_apps, reservation_payment, llm_tools]"),
         ("key", "awards:", "[JPHacks 三菱重工賞 & SecureCycle賞, RSS Hackathon 審査員特別賞]"),
         ("key", "philosophy:", "\"AI does what it's good at. Humans do the rest.\""),
         ("prompt", "$ ./say_hi --to you"),
-        ("out", "Show me a match video. I'll tell you where the ball is — and who's got it. ⚽"),
+        ("out", "Got an idea that needs eyes and a backend? Let's build it. 🚀"),
     ]
     top, lh = 68, 26
     H = top + lh * len(lines) + 36
@@ -312,7 +320,7 @@ def footer() -> str:
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
   <path fill="{GREEN}" opacity="0.18" d="{w1a}"><animate attributeName="d" values="{w1a};{w1b};{w1a}" dur="7s" repeatCount="indefinite"/></path>
   <path fill="#0B3D2E" opacity="0.9" d="{w2a}"><animate attributeName="d" values="{w2a};{w2b};{w2a}" dur="5s" repeatCount="indefinite"/></path>
-  <text x="{W / 2}" y="{H - 22}" fill="{TEXT}" font-family="{MONO}" font-size="13" text-anchor="middle" opacity="0.85">Detection is the easy part. Understanding the game is the goal.</text>
+  <text x="{W / 2}" y="{H - 22}" fill="{TEXT}" font-family="{MONO}" font-size="13" text-anchor="middle" opacity="0.85">Research that ships. Products that think.</text>
 </svg>
 """
 
